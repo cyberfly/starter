@@ -84,9 +84,9 @@ class AdminCandidatesController extends \BaseController {
 
 			if ( $user->id ) {
 
-				// Save roles. Handles updating. Change to your supervisor role ID
-				$supervisor_role = array(4);
-				$user->saveRoles($supervisor_role);
+				// Save roles. Handles updating. Change to your candidate role ID
+				$candidate_role = array(3);
+				$user->saveRoles($candidate_role);
 
 				// save supervisor info
 
