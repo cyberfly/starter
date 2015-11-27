@@ -1,0 +1,1 @@
+C:\laragon\www\starter\app/views/approvedsites/show.blade.php

@@ -85,7 +85,7 @@
     					<li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
     					<li{{ (Request::is('admin/blogs*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/blogs') }}}"><span class="glyphicon glyphicon-list-alt"></span> Blog</a></li>
     					<li{{ (Request::is('admin/questions*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/questions') }}}"><span class="glyphicon glyphicon-list-alt"></span> Questions</a></li>
-    					<li{{ (Request::is('admin/approved_sites*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/approved_sites') }}}"><span class="glyphicon glyphicon-list-alt"></span> Approved Sites</a></li>
+    					<li{{ (Request::is('admin/approvedsites*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/approvedsites') }}}"><span class="glyphicon glyphicon-list-alt"></span> Approved Sites</a></li>
     					<li{{ (Request::is('admin/supervisors*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/supervisors') }}}"><span class="glyphicon glyphicon-list-alt"></span> Supervisors</a></li>
     					<li{{ (Request::is('admin/candidates*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/candidates') }}}"><span class="glyphicon glyphicon-list-alt"></span> Candidates</a></li>
     					<li{{ (Request::is('admin/comments*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/comments') }}}"><span class="glyphicon glyphicon-bullhorn"></span> Comments</a></li>
@@ -150,6 +150,34 @@
     	$('.wysihtml5').wysihtml5();
         $(prettyPrint);
     </script>
+
+		<script type="text/javascript">
+
+			$( document ).ready(function() {
+
+			    // letak code jQuery atau javascript di dalam ni
+
+			    $( ".delete" ).click(function(e) {
+
+			    	e.preventDefault();
+
+			    	var button_id = $(this).attr('id');
+						// console.log(button_id);
+						var explode = button_id.split("_");
+						var id = explode[1];
+						// console.log(id);
+			    	var choice = confirm("Delete this record?");
+
+		    		if (choice){
+		    			$('#form_'+id).submit();
+		    		}
+		    		else{
+		    			return false;
+		    		}
+			    });
+			});
+
+		</script>
 
     @yield('scripts')
 
