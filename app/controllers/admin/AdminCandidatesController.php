@@ -162,7 +162,11 @@ class AdminCandidatesController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
+		$candidate = Candidate::find($id);
+
 		Candidate::destroy($id);
+
+		$candidate->candidate_info()->delete();
 
 		return Redirect::route('admin.candidates.index');
 	}

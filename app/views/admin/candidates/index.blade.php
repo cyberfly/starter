@@ -84,9 +84,15 @@
 			<td>
 				{{ link_to_route('admin.candidates.edit', 'Edit', array($candidate->id), array('class'=>'btn btn-default btn-xs')) }}
 
-				{{ Form::open(array('route' => array('admin.candidates.destroy', $candidate->id), 'method'=> 'delete' )) }}
+        <?php
+				$form_id = 'form_'.$candidate->id;
+				$button_id = 'button_'.$candidate->id;
+				  ?>
 
-				{{ Form::submit('Delete',array('class'=>'btn btn-xs btn-danger')) }}
+
+				{{ Form::open(array('route' => array('admin.candidates.destroy', $candidate->id), 'method'=> 'delete','id'=>$form_id )) }}
+
+				{{ Form::submit('Delete',array('class'=>'btn btn-xs btn-danger delete','id'=>$button_id)) }}
 
 				{{ Form::close() }}
 			</td>
