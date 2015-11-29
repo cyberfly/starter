@@ -9,39 +9,59 @@ class AdminCandidatesController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $candidates = Candidate::all();
-		// $candidates = Candidate::has('Candidate_info')->get();
+		// dd(Auth::user());
 
 		$candidate_name = Input::get('candidate_name');
 		$candidate_ic = Input::get('candidate_ic');
+		$candidate_email = Input::get('candidate_email');
+		$candidate_phone = Input::get('candidate_phone');
+		$candidate_site = Input::get('candidate_site');
 
-		// $candidates = Candidate::with('candidate_info')->filter()->paginate(5);
+		$filter_data = array('candidate_name' => $candidate_name,
+												'candidate_ic' => $candidate_ic,
+												'candidate_email' => $candidate_email,
+												'candidate_phone' => $candidate_phone,
+												'candidate_site' => $candidate_site
+											 );
+
+		// if supervisor login, only shown his Approved Site candidate
+
+		if (Entrust::hasRole('supervisor')) {
+				$supervisor_info = Candidate::with('candidate_info')->find(Auth::user()->id);
+				$filter_data['candidate_site'] = $supervisor_info->candidate_info->approved_site_id;
+		}
+
+		$candidates = Candidate::with('candidate_info.site_info')->filter($filter_data)->paginate(1);
+
+		// dd($candidates->toArray());
 		// $candidates = Candidate::with('candidate_info')->paginate(5);
-		// $candidates = Candidate::with('candidate_info');
-		$query = DB::table('users')
-		         ->join('candidates_info', 'users.id', '=', 'candidates_info.user_id')
-						 ->select('users.*', 'candidates_info.candidate_name', 'candidates_info.candidate_ic', 'candidates_info.candidate_phone','candidates_info.approved_site_id')
-						 ;
+		// dd($candidates->toArray());
 
- 		if (!empty($candidate_name)) {
- 			$query->where('candidate_name', 'LIKE', $candidate_name);
- 		}
-
- 		if (!empty($candidate_ic)) {
- 			$query->where('candidate_ic', '=', $candidate_ic);
- 		}
-
-		$candidates = $query->paginate(5);
-
-		// if (!empty($candidate_name)) {
-		// 		$candidates = $candidates->where('candidate_name', '=', $candidate_name);
-		// }
+		// $query = DB::table('users')
+		//          ->join('candidates_info', 'users.id', '=', 'candidates_info.user_id')
+		// 				 ->select('users.*', 'candidates_info.candidate_name', 'candidates_info.candidate_ic', 'candidates_info.candidate_phone','candidates_info.approved_site_id')
+		// 				 ;
 		//
-		// if (!empty($candidate_ic)) {
-		// 		$candidates = $candidates->where('candidates_info.candidate_ic', '=', $candidate_ic);
-		// }
+ 	// 	if (!empty($candidate_name)) {
+ 	// 		$query->where('candidate_name', 'LIKE', $candidate_name);
+ 	// 	}
+		//
+ 	// 	if (!empty($candidate_ic)) {
+ 	// 		$query->where('candidate_ic', '=', $candidate_ic);
+ 	// 	}
+		//
+		// $candidates = $query->paginate(5);
 
-		return View::make('admin.candidates.index', compact('candidates'));
+		$approvedsites = $this->getApprovedSites();
+
+		return View::make('admin.candidates.index', compact('candidates','approvedsites'));
+	}
+
+	private function getApprovedSites()
+	{
+			$approvedsites = ['' => 'Select Site'] + Approvedsite::lists('agname', 'id');
+
+			return $approvedsites;
 	}
 
 	/**
@@ -51,7 +71,10 @@ class AdminCandidatesController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('admin.candidates.create');
+		$approvedsites = $this->getApprovedSites();
+		// dd($approvedsites);
+
+		return View::make('admin.candidates.create',compact('approvedsites'));
 	}
 
 	/**
@@ -85,13 +108,16 @@ class AdminCandidatesController extends \BaseController {
 			if ( $user->id ) {
 
 				// Save roles. Handles updating. Change to your candidate role ID
-				$candidate_role = array(3);
+				// see the constant list at app/config/constants.php
+
+				$candidate_role = Config::get('constants.CANDIDATE_ROLE');
 				$user->saveRoles($candidate_role);
 
 				// save supervisor info
 
 				$candidate_info = new Candidate_info;
 				$candidate_info->user_id = $user->id;
+				$candidate_info->approved_site_id = Input::get( 'approved_site_id' );
 				$candidate_info->candidate_name = Input::get( 'candidate_name' );
 				$candidate_info->candidate_ic = Input::get( 'candidate_ic' );
 				$candidate_info->candidate_phone = Input::get( 'candidate_phone' );
@@ -103,7 +129,7 @@ class AdminCandidatesController extends \BaseController {
 			}
 		}
 
-		return Redirect::route('admin.candidates.index');
+		return Redirect::route('admin.candidates.index')->with('success', 'Record successfully inserted');
 	}
 
 	/**
@@ -127,9 +153,11 @@ class AdminCandidatesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$candidate = Candidate::find($id);
+		$candidate = Candidate::with('candidate_info')->find($id);
 
-		return View::make('admin.candidates.edit', compact('candidate'));
+		$approvedsites = $this->getApprovedSites();
+
+		return View::make('admin.candidates.edit', compact('candidate','approvedsites'));
 	}
 
 	/**
@@ -140,7 +168,7 @@ class AdminCandidatesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$candidate = Candidate::findOrFail($id);
+		$candidate = Candidate::with('candidate_info')->findOrFail($id);
 
 		$validator = Validator::make($data = Input::all(), Candidate::$rules);
 
@@ -148,10 +176,30 @@ class AdminCandidatesController extends \BaseController {
 		{
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
+		else {
 
-		$candidate->update($data);
+			$candidate->username = Input::get( 'username' );
+			$candidate->email = Input::get( 'email' );
 
-		return Redirect::route('admin.candidates.index');
+			if ( $candidate->save() ) {
+
+				// save supervisor info
+
+				$candidate_info = $candidate->candidate_info;
+				$candidate_info->approved_site_id = Input::get( 'approved_site_id' );
+				$candidate_info->candidate_name = Input::get( 'candidate_name' );
+				$candidate_info->candidate_ic = Input::get( 'candidate_ic' );
+				$candidate_info->candidate_phone = Input::get( 'candidate_phone' );
+
+				// save candidate info
+
+				$candidate_info->save();
+
+			}
+
+		}
+
+		return Redirect::route('admin.candidates.edit',array($id))->with('success', 'Record successfully updated');
 	}
 
 	/**

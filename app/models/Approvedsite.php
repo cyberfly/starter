@@ -12,8 +12,15 @@ class Approvedsite extends \Eloquent {
 
 	// Don't forget to fill this array
 	protected $fillable = [];
+
 	public function refs()
 	{
 		return $this->hasOne('Ref','code','state');
 	}
+
+	public function candidate_info()
+	{
+			return $this->hasMany('Candidate_info','approved_site_id','id');
+	}
+
 }

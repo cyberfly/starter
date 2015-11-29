@@ -16,5 +16,9 @@ class Candidate_info extends \Eloquent {
       return $this->belongsTo('Candidate');
   }
 
+	public function site_info() {
+      return $this->belongsTo('Approvedsite');
+  }
+
 
 }

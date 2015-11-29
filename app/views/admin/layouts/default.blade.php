@@ -82,13 +82,13 @@
                 </div>
     			<div class="collapse navbar-collapse navbar-ex1-collapse">
     				<ul class="nav navbar-nav">
-    					<li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-    					<li{{ (Request::is('admin/blogs*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/blogs') }}}"><span class="glyphicon glyphicon-list-alt"></span> Blog</a></li>
+    					<li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin') }}}"><span class="glyphicon glyphicon-home"></span> Question Bank</a></li>
+    					<!-- <li{{ (Request::is('admin/blogs*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/blogs') }}}"><span class="glyphicon glyphicon-list-alt"></span> Blog</a></li> -->
     					<li{{ (Request::is('admin/questions*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/questions') }}}"><span class="glyphicon glyphicon-list-alt"></span> Questions</a></li>
     					<li{{ (Request::is('admin/approvedsites*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/approvedsites') }}}"><span class="glyphicon glyphicon-list-alt"></span> Approved Sites</a></li>
     					<li{{ (Request::is('admin/supervisors*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/supervisors') }}}"><span class="glyphicon glyphicon-list-alt"></span> Supervisors</a></li>
     					<li{{ (Request::is('admin/candidates*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/candidates') }}}"><span class="glyphicon glyphicon-list-alt"></span> Candidates</a></li>
-    					<li{{ (Request::is('admin/comments*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/comments') }}}"><span class="glyphicon glyphicon-bullhorn"></span> Comments</a></li>
+    					<!-- <li{{ (Request::is('admin/comments*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/comments') }}}"><span class="glyphicon glyphicon-bullhorn"></span> Comments</a></li> -->
     					<li class="dropdown{{ (Request::is('admin/users*|admin/roles*') ? ' active' : '') }}">
     						<a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/users') }}}">
     							<span class="glyphicon glyphicon-user"></span> Users <span class="caret"></span>

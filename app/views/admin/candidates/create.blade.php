@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
 
 	<!-- paste your content here  -->
 
@@ -19,9 +19,17 @@
 			</h3>
 		</div>
 
-	{{ Form::open(array('route' => 'admin.candidates.store', 'files'=>true)) }}
+	{{ Form::open(array('route' => 'admin.candidates.store', 'class'=>'')) }}
 
-	  <div class="form-group">
+    <div class="form-group">
+
+      {{ Form::label('approved_site_id', 'Approved Sites') }}
+      {{ Form::select('approved_site_id', $approvedsites, '', array('class'=>'form-control')) }}
+
+    </div>
+
+
+    <div class="form-group">
 
 	    {{ Form::label('username', 'Username') }}
 	    {{ Form::text('username','',array('class'=>'form-control')) }}
@@ -65,28 +73,16 @@
 
     <div class="form-group">
 
-	    {{ Form::label('candidate_phone', 'candidate_phone') }}
+	    {{ Form::label('candidate_phone', 'Candidate Phone') }}
 	    {{ Form::text('candidate_phone','',array('class'=>'form-control')) }}
 
 	  </div>
-
-    <div class="row">
-      <div class="col-md-3">
-
-        <div class="form-group">
-
-    	    {{ Form::label('correct_option', 'Correct Answer Option') }}
-    	    {{ Form::select('correct_option', array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D'), '', array('class'=>'form-control')) }}
-
-    	  </div>
-      </div>
-
-    </div>
 
 
 
 
 	  {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+	  {{ Form::reset('Reset',array('class'=>'btn btn-default')) }}
 
 	{{ Form::close() }}
 
