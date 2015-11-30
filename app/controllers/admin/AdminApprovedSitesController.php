@@ -54,7 +54,7 @@ class AdminApprovedSitesController extends \BaseController {
 
 	public function get_states()
 	{
-		$states = Ref::where('group_type','=','6')->lists('desc1','code');
+		$states = ['' => 'Select State'] + Ref::where('group_type','=','6')->lists('desc1','code');
 		return $states;
 	}
 

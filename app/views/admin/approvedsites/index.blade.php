@@ -134,7 +134,8 @@
 </table>
 
 <?php
-	echo $approvedsites->links();
+	// echo $approvedsites->links();
+	echo $approvedsites->appends(Request::except('page'))->links();
 ?>
 @stop
 @stop
