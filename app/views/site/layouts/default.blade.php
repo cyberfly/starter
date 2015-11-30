@@ -66,6 +66,8 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
 						<li {{ (Request::is('/') ? ' class="active"' : '') }}><a href="{{{ URL::to('') }}}">Home</a></li>
+						<li{{ (Request::is('exam/*') ? ' class="active"' : '') }}><a href="{{{ URL::to('exam') }}}"><span class="glyphicon glyphicon-list-alt"></span> Exam</a></li>
+
 					</ul>
 
                     <ul class="nav navbar-nav pull-right">
@@ -114,6 +116,7 @@
 		================================================== -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery.steps.min.js')}}"></script>
 
         @yield('scripts')
 	</body>

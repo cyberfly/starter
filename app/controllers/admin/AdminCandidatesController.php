@@ -111,10 +111,13 @@ class AdminCandidatesController extends \BaseController {
 				// see the constant list at app/config/constants.php
 
 				$candidate_role = Config::get('constants.CANDIDATE_ROLE');
-				$user->saveRoles($candidate_role);
+
+				$user_role = array($candidate_role);
+
+				$user->saveRoles($user_role);
 
 				// save supervisor info
-
+				
 				$candidate_info = new Candidate_info;
 				$candidate_info->user_id = $user->id;
 				$candidate_info->approved_site_id = Input::get( 'approved_site_id' );

@@ -111,7 +111,10 @@ class AdminSupervisorsController extends \BaseController {
 				// see the constant list at app/config/constants.php
 
 				$supervisor_role = Config::get('constants.SUPERVISOR_ROLE');
-				$user->saveRoles($supervisor_role);
+
+				$user_role = array($supervisor_role);
+
+				$user->saveRoles($user_role);
 
 				// save supervisor info
 
