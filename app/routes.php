@@ -72,6 +72,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     #Question Management
 
     Route::resource('questions', 'AdminQuestionsController');
+    Route::resource('supervisors', 'AdminSupervisorsController');
     Route::resource('candidates', 'AdminCandidatesController');
     Route::resource('approvedsites', 'AdminApprovedSitesController');
 
