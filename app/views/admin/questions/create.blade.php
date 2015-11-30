@@ -59,7 +59,14 @@
         <div class="form-group">
 
           {{ Form::label('question_image', 'Question Image') }}
-          {{ Form::file('question_image','',array('class'=>'form-control')) }}
+
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+            <div>
+              <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>{{ Form::file('question_image','',array('class'=>'form-control')) }}</span>
+              <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -87,15 +94,29 @@
       <div class="col-md-3">
 
         {{ Form::label($option_image, 'Question Option Image') }}
-        {{ Form::file($option_image,'',array('class'=>'form-control')) }}
+
+
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+          <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+          <div>
+            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>{{ Form::file($option_image,'',array('class'=>'form-control')) }}</span>
+            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+          </div>
+        </div>
 
       </div>
     </div>
 
     @endfor
 
+    <div class="row">
+        <div class="col-md-3">
+            {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+        </div>
+    </div>
 
-	  {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+
+
 
 	{{ Form::close() }}
 

@@ -11,6 +11,25 @@
 		</h3>
 	</div>
 
+	<div class="search_box" style="margin-bottom:30px;">
+    {{ Form::open(array('route' => 'admin.questions.index', 'method'=>'GET')) }}
+    <div class="row">
+      <div class="col-lg-4">
+				{{ Form::select('question_section', array('' => 'Select Section', 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D'), Input::get('question_section'), array('class'=>'form-control')) }}
+
+      </div>
+      <div class="col-lg-4">
+				{{ Form::select('question_language', array('' => 'Select Language','BM' => 'BM', 'BI' => 'BI'), Input::get('question_language'), array('class'=>'form-control')) }}
+
+      </div>
+      <div class="col-lg-2">
+        {{ Form::submit('Search Question',array('class'=>'btn btn-primary')) }}
+      </div>
+    </div>
+    {{ Form::close() }}
+
+  </div>
+
 <table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
@@ -73,7 +92,7 @@
 
 </table>
 
-{{ $questions->links() }}
+{{ $questions->appends(Request::except('page'))->links() }}
 
 @stop
 

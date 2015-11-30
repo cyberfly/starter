@@ -78,11 +78,15 @@
 
 	  </div>
 
+    <div class="form-group">
+
+      {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+      {{ Form::reset('Reset',array('class'=>'btn btn-default')) }}
+
+    </div>
 
 
 
-	  {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
-	  {{ Form::reset('Reset',array('class'=>'btn btn-default')) }}
 
 	{{ Form::close() }}
 

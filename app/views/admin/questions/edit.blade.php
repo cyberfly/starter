@@ -63,7 +63,14 @@
         <div class="form-group">
 
           {{ Form::label('question_image', 'Question Image') }}
-          {{ Form::file('question_image','',array('class'=>'form-control')) }}
+
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+            <div>
+              <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>{{ Form::file('question_image','',array('class'=>'form-control')) }}</span>
+              <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -72,7 +79,7 @@
             {{ Form::label('question_image_preview', 'Question Image Preview') }}
         </div>
         <div class="form-group">
-          <img src="{{asset('uploads/questions/').'/'.$question->question_image}}" alt="" />
+          <img width="400" src="{{asset('uploads/questions/').'/'.$question->question_image}}" alt="" />
         </div>
       </div>
     </div>
@@ -99,10 +106,17 @@
       <div class="col-md-3">
 
         {{ Form::label($option_image, 'Question Option Image') }}
-        {{ Form::file($option_image,'',array('class'=>'form-control')) }}
+
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+          <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+          <div>
+            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span>{{ Form::file($option_image,'',array('class'=>'form-control')) }}</span>
+            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+          </div>
+        </div>
 
         <div class="form-group">
-          <img src="{{asset('uploads/questions/').'/'.$question->$option_image}}" alt="" />
+          <img width="200" src="{{asset('uploads/questions/').'/'.$question->$option_image}}" alt="" />
         </div>
 
       </div>
@@ -111,7 +125,11 @@
     @endfor
 
 
-	  {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+    <div class="row">
+        <div class="col-md-3">
+            {{ Form::submit('Submit Form',array('class'=>'btn btn-primary')) }}
+        </div>
+    </div>
 
 	{{ Form::close() }}
 

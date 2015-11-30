@@ -21,8 +21,29 @@ class Question extends \Eloquent {
 	// Don't forget to fill this array
 	protected $fillable = [];
 
-	public function user() { 			 
+	public function user() {
 			 return $this->belongsTo('User');
   }
+
+	public function scopeFilter($query,$filter_data=array())
+	{
+		if (isset($filter_data['question_section']) && !empty($filter_data['question_section'])) {
+
+			$question_section = $filter_data['question_section'];
+			$query->where('question_section', '=', $question_section);
+
+		}
+
+		if (isset($filter_data['question_language']) && !empty($filter_data['question_language'])) {
+
+			$question_language = $filter_data['question_language'];
+
+			$query->where('question_language', '=', $question_language);
+
+		}
+
+		return $query;
+
+	}
 
 }

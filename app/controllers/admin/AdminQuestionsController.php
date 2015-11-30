@@ -9,7 +9,16 @@ class AdminQuestionsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$questions = Question::orderBy('id', 'DESC')->paginate(1);
+		// get value from url to search
+
+		$question_section = Input::get('question_section');
+		$question_language = Input::get('question_language');
+
+		$filter_data = array('question_section' => $question_section,
+												'question_language' => $question_language
+											 );
+
+		$questions = Question::orderBy('id', 'DESC')->filter($filter_data)->paginate(2);
 
 		// var_dump($questions->toArray());
 		// exit;
@@ -59,6 +68,7 @@ class AdminQuestionsController extends \BaseController {
 			//insert question into database
 
 			$question = new Question;
+			$question->user_id = Auth::user()->id;
 			$question->question_content = Input::get('question_content');
 			$question->question_section = Input::get('question_section');
 			$question->correct_option = Input::get('correct_option');
@@ -140,8 +150,8 @@ class AdminQuestionsController extends \BaseController {
 	{
 		$question = Question::find($id);
 
-		$user = $question->user;
-		var_dump($user);
+		// $user = $question->user;
+		// var_dump($user);
 		// $question = Question::find($id)->user()->get();
 		// $username = Question::find($id)->user->username;
 
