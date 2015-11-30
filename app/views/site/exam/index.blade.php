@@ -3,52 +3,73 @@
 {{-- Content --}}
 @section('content')
 
+<div class="row">
+		<div class="col-md-8">
+
+			<div id="example-basic">
+
+					@foreach ($questions as $key => $question)
+
+					<h3>Question</h3>
+					<section>
+							{{ String::tidy($question->question_content) }}
+							@if(!empty($question->question_image))
+								<img src="{{asset('uploads/questions/').'/'.$question->question_image}}" width="400">
+							@endif
+							<div class="question_choice">
+
+								<ol type="A">
+									<li>
+										{{ String::tidy($question->option_content_1) }}
+										@if(!empty($question->option_image_1))
+										<img src="{{ asset('uploads/questions/').'/'.$question->option_image_1 }}" width="200">
+										@endif{{ Form::radio('question_choice_'.$question->id, 'A') }}
+									</li>
+
+									<li>{{ String::tidy($question->option_content_2) }}
+										 @if(!empty($question->option_image_2))
+										 <img src="{{ asset('uploads/questions/').'/'.$question->option_image_2 }}" width="200">
+										 @endif
+										 {{ Form::radio('question_choice_'.$question->id, 'B') }}
+									</li>
+									<li>{{ String::tidy($question->option_content_3) }}
+										@if(!empty($question->option_image_3))
+											<img src="{{ asset('uploads/questions/').'/'.$question->option_image_3 }}" width="200">
+										 @endif
+										 {{ Form::radio('question_choice_'.$question->id, 'C') }}
+									 </li>
+									<li>{{ String::tidy($question->option_content_4) }}
+										@if(!empty($question->option_image_4))
+											<img src="{{ asset('uploads/questions/').'/'.$question->option_image_4 }}" width="200">
+										 @endif
+										{{ Form::radio('question_choice_'.$question->id, 'D') }}
+									</li>
+								</ol>
+
+							</div>
+					</section>
 
 
-<div id="example-basic">
-		<h3>Keyboard</h3>
-		<section>
-				<p>Try the keyboard navigation by clicking arrow left or right!</p>
-		</section>
-		<h3>Effects</h3>
-		<section>
-				<p>Wonderful transition effects.</p>
-		</section>
-		<h3>Pager</h3>
-		<section>
-				<p>The next and previous buttons help you to navigate through your content.</p>
-		</section>
+					@endforeach
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="right_sidebar">
+				<h3>Exam Info</h3>
+				<p>
+					Answered Question: 13 / 70
+				</p>
+				<p>
+					Mark Question: 5 / 70
+				</p>
+			</div>
+		</div>
 </div>
 
 
 
-    <form id="example-basic1" action="#">
-        <div>
 
-						@foreach ($questions as $key => $question)
-
-						<h3>Account</h3>
-            <section>
-                <p>
-                	{{ String::tidy($question->question_content) }}
-                </p>
-								<label for="userName">User name *</label>
-                <input id="userName" name="userName" type="text" class="required">
-                <label for="password">Password *</label>
-                <input id="password" name="password" type="text" class="required">
-                <label for="confirm">Confirm Password *</label>
-                <input id="confirm" name="confirm" type="text" class="required">
-                <p>(*) Mandatory</p>
-            </section>
-
-						@endforeach
-
-            <h3>Finish</h3>
-            <section>
-                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
-            </section>
-        </div>
-    </form>
 
 @stop
 
