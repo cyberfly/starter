@@ -83,7 +83,7 @@
       {{{ $supervisor->supervisor_info->supervisor_phone }}}
       </td>
       <td>
-			{{{ $supervisor->supervisor_info->site_info }}}
+			{{{ $supervisor->supervisor_info->site_info->agname }}}
       </td>
       <td>
       {{{ $supervisor->username }}}

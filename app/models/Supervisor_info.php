@@ -17,7 +17,8 @@ class Supervisor_info extends \Eloquent {
   }
 
 	public function site_info() {
-      return $this->belongsTo('Approvedsite');
+      // return $this->belongsTo('Approvedsite');
+			return $this->hasOne('Approvedsite','id','approved_site_id');
   }
 
 

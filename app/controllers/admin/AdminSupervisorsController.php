@@ -27,11 +27,14 @@ class AdminSupervisorsController extends \BaseController {
 		// if supervisor login, only shown his Approved Site supervisor
 
 		if (Entrust::hasRole('supervisor')) {
-				$supervisor_info = Supervisor::with('supervisor_info')->find(Auth::user()->id);
+				$supervisor_info = Supervisor::with('supervisor_info.site_info')->find(Auth::user()->id);
 				$filter_data['supervisor_site'] = $supervisor_info->supervisor_info->approved_site_id;
 		}
 
 		$supervisors = Supervisor::with('supervisor_info.site_info')->filter($filter_data)->paginate(1);
+
+		// $queries = DB::getQueryLog();
+		// dd($queries);
 
 		// dd($supervisors->toArray());
 		// $supervisors = Supervisor::with('supervisor_info')->paginate(5);

@@ -83,7 +83,7 @@
       {{{ $candidate->candidate_info->candidate_phone }}}
       </td>
       <td>
-			{{{ $candidate->candidate_info->site_info }}}
+			{{{ $candidate->candidate_info->site_info->agname }}}
       </td>
       <td>
       {{{ $candidate->username }}}

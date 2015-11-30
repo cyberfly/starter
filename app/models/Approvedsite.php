@@ -18,9 +18,14 @@ class Approvedsite extends \Eloquent {
 		return $this->hasOne('Ref','code','state');
 	}
 
-	public function candidate_info()
+	public function candidateInfo()
 	{
 			return $this->hasMany('Candidate_info','approved_site_id','id');
+	}
+
+	public function supervisorInfo()
+	{
+			return $this->hasMany('Supervisor_info','approved_site_id','id');
 	}
 
 }
