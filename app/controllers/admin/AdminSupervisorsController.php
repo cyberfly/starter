@@ -33,28 +33,6 @@ class AdminSupervisorsController extends \BaseController {
 
 		$supervisors = Supervisor::with('supervisor_info.site_info')->filter($filter_data)->paginate(1);
 
-		// $queries = DB::getQueryLog();
-		// dd($queries);
-
-		// dd($supervisors->toArray());
-		// $supervisors = Supervisor::with('supervisor_info')->paginate(5);
-		// dd($supervisors->toArray());
-
-		// $query = DB::table('users')
-		//          ->join('supervisors_info', 'users.id', '=', 'supervisors_info.user_id')
-		// 				 ->select('users.*', 'supervisors_info.supervisor_name', 'supervisors_info.supervisor_ic', 'supervisors_info.supervisor_phone','supervisors_info.approved_site_id')
-		// 				 ;
-		//
- 	// 	if (!empty($supervisor_name)) {
- 	// 		$query->where('supervisor_name', 'LIKE', $supervisor_name);
- 	// 	}
-		//
- 	// 	if (!empty($supervisor_ic)) {
- 	// 		$query->where('supervisor_ic', '=', $supervisor_ic);
- 	// 	}
-		//
-		// $supervisors = $query->paginate(5);
-
 		$approvedsites = $this->getApprovedSites();
 
 		return View::make('admin.supervisors.index', compact('supervisors','approvedsites'));
@@ -130,12 +108,15 @@ class AdminSupervisorsController extends \BaseController {
 
 				// save supervisor info
 
-				$supervisor_info->save();
+				if($supervisor_info->save())
+				{
+						return Redirect::route('admin.supervisors.index')->with('success', 'Record successfully inserted');
+				}
 
 			}
 		}
 
-		return Redirect::route('admin.supervisors.index')->with('success', 'Record successfully inserted');
+		return Redirect::route('admin.supervisors.index')->with('error', 'No record inserted');
 	}
 
 	/**
@@ -199,13 +180,16 @@ class AdminSupervisorsController extends \BaseController {
 
 				// save supervisor info
 
-				$supervisor_info->save();
+				if($supervisor_info->save())
+				{
+					return Redirect::route('admin.supervisors.edit',array($id))->with('success', 'Record successfully updated');
+				}
 
 			}
 
 		}
 
-		return Redirect::route('admin.supervisors.edit',array($id))->with('success', 'Record successfully updated');
+		return Redirect::route('admin.supervisors.edit',array($id))->with('error', 'No record updated');
 	}
 
 	/**
@@ -222,7 +206,7 @@ class AdminSupervisorsController extends \BaseController {
 
 		$supervisor->supervisor_info()->delete();
 
-		return Redirect::route('admin.supervisors.index');
+		return Redirect::route('admin.supervisors.index')->with('success', 'Record successfully deleted');
 	}
 
 }

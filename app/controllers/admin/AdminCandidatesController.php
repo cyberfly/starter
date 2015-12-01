@@ -33,25 +33,6 @@ class AdminCandidatesController extends \BaseController {
 
 		$candidates = Candidate::with('candidate_info.site_info')->filter($filter_data)->paginate(1);
 
-		// dd($candidates->toArray());
-		// $candidates = Candidate::with('candidate_info')->paginate(5);
-		// dd($candidates->toArray());
-
-		// $query = DB::table('users')
-		//          ->join('candidates_info', 'users.id', '=', 'candidates_info.user_id')
-		// 				 ->select('users.*', 'candidates_info.candidate_name', 'candidates_info.candidate_ic', 'candidates_info.candidate_phone','candidates_info.approved_site_id')
-		// 				 ;
-		//
- 	// 	if (!empty($candidate_name)) {
- 	// 		$query->where('candidate_name', 'LIKE', $candidate_name);
- 	// 	}
-		//
- 	// 	if (!empty($candidate_ic)) {
- 	// 		$query->where('candidate_ic', '=', $candidate_ic);
- 	// 	}
-		//
-		// $candidates = $query->paginate(5);
-
 		$approvedsites = $this->getApprovedSites();
 
 		return View::make('admin.candidates.index', compact('candidates','approvedsites'));
@@ -117,7 +98,7 @@ class AdminCandidatesController extends \BaseController {
 				$user->saveRoles($user_role);
 
 				// save supervisor info
-				
+
 				$candidate_info = new Candidate_info;
 				$candidate_info->user_id = $user->id;
 				$candidate_info->approved_site_id = Input::get( 'approved_site_id' );
@@ -127,12 +108,15 @@ class AdminCandidatesController extends \BaseController {
 
 				// save candidate info
 
-				$candidate_info->save();
+				if($candidate_info->save())
+				{
+						return Redirect::route('admin.candidates.index')->with('success', 'Record successfully inserted');
+				}
 
 			}
 		}
 
-		return Redirect::route('admin.candidates.index')->with('success', 'Record successfully inserted');
+		return Redirect::route('admin.candidates.index')->with('error', 'No record inserted');
 	}
 
 	/**
@@ -196,13 +180,16 @@ class AdminCandidatesController extends \BaseController {
 
 				// save candidate info
 
-				$candidate_info->save();
+				if($candidate_info->save())
+				{
+						return Redirect::route('admin.candidates.edit',array($id))->with('success', 'Record successfully updated');
+				}
 
 			}
 
 		}
 
-		return Redirect::route('admin.candidates.edit',array($id))->with('success', 'Record successfully updated');
+		return Redirect::route('admin.candidates.edit',array($id))->with('error', 'No record updated');
 	}
 
 	/**
@@ -219,7 +206,7 @@ class AdminCandidatesController extends \BaseController {
 
 		$candidate->candidate_info()->delete();
 
-		return Redirect::route('admin.candidates.index');
+		return Redirect::route('admin.candidates.index')->with('success', 'Record successfully deleted');
 	}
 
 }

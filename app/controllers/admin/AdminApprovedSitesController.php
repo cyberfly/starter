@@ -58,31 +58,32 @@ class AdminApprovedSitesController extends \BaseController {
 		}
 		else
 		{
-			$user = Auth::user();
-			$approvedsite = new Approvedsite;
-			$approvedsite->agcode = Input::get('agcode');
-			$approvedsite->agname = Input::get('agname');
-			$approvedsite->add1 = Input::get('add1');
-			$approvedsite->add2 = Input::get('add2');
-			$approvedsite->add3 = Input::get('add3');
-			$approvedsite->city = Input::get('city');
-			$approvedsite->postcode = Input::get('postcode');
-			$approvedsite->state = Input::get('state');
-			$approvedsite->tel = Input::get('tel');
-			$approvedsite->fax = Input::get('fax');
-			$approvedsite->email = Input::get('email');
-			$approvedsite->create_by = $user->id;
-			$approvedsite->create_dtm = Input::get('create_dtm');
-			$approvedsite->lst_modif_by = $user->id;
-			$approvedsite->lst_modif_dtm = Input::get('lst_modif_dtm');
+				$user = Auth::user();
+				$approvedsite = new Approvedsite;
+				$approvedsite->agcode = Input::get('agcode');
+				$approvedsite->agname = Input::get('agname');
+				$approvedsite->add1 = Input::get('add1');
+				$approvedsite->add2 = Input::get('add2');
+				$approvedsite->add3 = Input::get('add3');
+				$approvedsite->city = Input::get('city');
+				$approvedsite->postcode = Input::get('postcode');
+				$approvedsite->state = Input::get('state');
+				$approvedsite->tel = Input::get('tel');
+				$approvedsite->fax = Input::get('fax');
+				$approvedsite->email = Input::get('email');
+				$approvedsite->create_by = $user->id;
+				$approvedsite->create_dtm = Input::get('create_dtm');
+				$approvedsite->lst_modif_by = $user->id;
+				$approvedsite->lst_modif_dtm = Input::get('lst_modif_dtm');
 
-			$approvedsite->save();
+				if ($approvedsite->save()) {
+						return Redirect::route('admin.approvedsites.index')->with('success', 'Record successfully inserted');
+				}
+		}
 
-		// Approvedsite::create($data);
+		return Redirect::route('admin.approvedsites.index')->with('error', 'No record inserted');
 
-		return Redirect::route('admin.approvedsites.index');
 	}
-}
 	/**
 	 * Display the specified approvedsite.
 	 *
@@ -121,8 +122,6 @@ class AdminApprovedSitesController extends \BaseController {
 	{
 		$approvedsite = Approvedsite::findOrFail($id);
 
-// var_dump ($approvedsite);
-// exit;
 		$validator = Validator::make($data = Input::all(), Approvedsite::$rules);
 
 		if ($validator->fails())
@@ -131,29 +130,32 @@ class AdminApprovedSitesController extends \BaseController {
 		}
 		else
 		{
-			$user = Auth::user();
+				$user = Auth::user();
 
-			$approvedsite->agcode = Input::get('agcode');
-			$approvedsite->agname = Input::get('agname');
-			$approvedsite->add1 = Input::get('add1');
-			$approvedsite->add2 = Input::get('add2');
-			$approvedsite->add3 = Input::get('add3');
-			$approvedsite->city = Input::get('city');
-			$approvedsite->postcode = Input::get('postcode');
-			$approvedsite->state = Input::get('state');
-			$approvedsite->tel = Input::get('tel');
-			$approvedsite->fax = Input::get('fax');
-			$approvedsite->email = Input::get('email');
-			$approvedsite->lst_modif_by = $user->id;
-			$approvedsite->lst_modif_dtm = Input::get('lst_modif_dtm');
+				$approvedsite->agcode = Input::get('agcode');
+				$approvedsite->agname = Input::get('agname');
+				$approvedsite->add1 = Input::get('add1');
+				$approvedsite->add2 = Input::get('add2');
+				$approvedsite->add3 = Input::get('add3');
+				$approvedsite->city = Input::get('city');
+				$approvedsite->postcode = Input::get('postcode');
+				$approvedsite->state = Input::get('state');
+				$approvedsite->tel = Input::get('tel');
+				$approvedsite->fax = Input::get('fax');
+				$approvedsite->email = Input::get('email');
+				$approvedsite->lst_modif_by = $user->id;
+				$approvedsite->lst_modif_dtm = Input::get('lst_modif_dtm');
 
-			$approvedsite->save();
+				if ($approvedsite->save()) {
+						return Redirect::route('admin.approvedsites.edit',array($id))->with('success', 'Record successfully updated');
+				}
 
-		// $approvedsite->update($data);
+			// $approvedsite->update($data);
 
-		return Redirect::route('admin.approvedsites.index');
+		}
+
+		return Redirect::route('admin.approvedsites.edit',array($id))->with('error', 'No record updated');
 	}
-}
 
 	/**
 	 * Remove the specified approvedsite from storage.
@@ -166,7 +168,7 @@ class AdminApprovedSitesController extends \BaseController {
 		// dd($id);
 		Approvedsite::destroy($id);
 
-		return Redirect::route('admin.approvedsites.index');
+		return Redirect::route('admin.approvedsites.index')->with('success', 'Record successfully deleted');
 	}
 
 }
