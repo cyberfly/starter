@@ -77,7 +77,7 @@
     {{{ $approvedsite->agname }}}
   </td>
   <td>
-    {{{ $approvedsite->add1.' '.$approvedsite->add2.' '.$approvedsite->add3.' '.$approvedsite->postcode.' '.$approvedsite->city.' '.$approvedsite->desc1 }}}
+    {{{ $approvedsite->add1.' '.$approvedsite->add2.' '.$approvedsite->add3.' '.$approvedsite->postcode.' '.$approvedsite->city.' '.$approvedsite->desc1.', '.$approvedsite->refs->desc1 }}}
   </td>
   <!-- <td>
     {{{ $approvedsite->add2 }}}

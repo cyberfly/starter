@@ -9,30 +9,14 @@ class AdminApprovedSitesController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $approvedsites = Approvedsite::all();
-		// $approvedsites = Approvedsite::paginate();
-
-		// $approvedsites = Approvedsite::where('state','=','02')->paginate();
-
 		$state = Input::get('state');
 		$site_name = Input::get('site_name');
 
-		$query = DB::table('approvedsites')
-						->join('ref', 'approvedsites.state', '=', 'ref.code')
-						->select('approvedsites.*', 'ref.desc1')
-		       ;
+		$filter_data = array('state' => $state,
+												'site_name' => $site_name
+											 );
 
-		if (!empty($state)) {
-				$query = $query->where('state','=',$state);
-		}
-
-		if (!empty($site_name)) {
-				$query = $query->where('agname','LIKE',"%$site_name%");
-		}
-
-		$approvedsites = $query->paginate(2);
-		// dd($query->toSql());
-		// dd(DB::getQueryLog());
+	  $approvedsites = Approvedsite::filter($filter_data)->paginate(2);
 
 		$states = $this->get_states();
 
