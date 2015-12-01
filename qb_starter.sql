@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Nov 30, 2015 at 07:07 AM
+-- Generation Time: Nov 30, 2015 at 11:50 PM
 -- Server version: 10.0.20-MariaDB
 -- PHP Version: 5.6.13
 
@@ -393,15 +393,17 @@ CREATE TABLE IF NOT EXISTS `supervisors_info` (
   `approved_site_id` int(10) NOT NULL,
   `supervisor_name` varchar(150) NOT NULL,
   `supervisor_ic` varchar(30) NOT NULL,
-  `supervisor_phone` varchar(30) NOT NULL
+  `supervisor_phone` varchar(30) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supervisors_info`
 --
 
-INSERT INTO `supervisors_info` (`id`, `user_id`, `approved_site_id`, `supervisor_name`, `supervisor_ic`, `supervisor_phone`) VALUES
-(1, 4, 1, 'fathur rahman', '1235555555', '01234567888');
+INSERT INTO `supervisors_info` (`id`, `user_id`, `approved_site_id`, `supervisor_name`, `supervisor_ic`, `supervisor_phone`, `updated_at`, `created_at`) VALUES
+(1, 4, 1, 'fathur rahman1', '1235555555', '01234567888', '2015-11-30 22:35:22', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -426,10 +428,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `confirmation_code`, `remember_token`, `confirmed`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@example.org', '$2y$10$WqTOrzQ9RYerEz8zv0Sd0uvcU8y62US4YEQ9jRpkrQIln6/Axz1.G', '93830d788c2def939a62a1acdbc7e592', '6RJIVz3IsOpxEPal99o5WOmWohdViUcSwnG9YdcGiXCMdcwExVm4jnT4KvbK', 1, '2015-11-18 20:15:37', '2015-11-26 00:45:51'),
-(2, 'user', 'user@example.org', '$2y$10$cHRFxGXBhbX23qtDGlNCouTGd4xSnrJzxy884rTEPfIbYejMC2ULq', '6c617c98147e7bb3b9bdfb1bdb1b5d2b', 'tdp8c5RAm65lZodZLDn02dU4O4UixhjkWIqPDSTmoHUcw1H4q3WxkoQrAUoK', 1, '2015-11-18 20:15:37', '2015-11-22 08:35:58'),
+(1, 'admin', 'admin@example.org', '$2y$10$WqTOrzQ9RYerEz8zv0Sd0uvcU8y62US4YEQ9jRpkrQIln6/Axz1.G', '93830d788c2def939a62a1acdbc7e592', '824xEYZHAR47alXcgY154YkyywlMK5t8vmyzDETNNGHhYsFuu6Ffur18z5mm', 1, '2015-11-18 20:15:37', '2015-11-30 23:21:15'),
+(2, 'user', 'user@example.org', '$2y$10$cHRFxGXBhbX23qtDGlNCouTGd4xSnrJzxy884rTEPfIbYejMC2ULq', '6c617c98147e7bb3b9bdfb1bdb1b5d2b', 'IdPMyZ0jGrsufQ7mh1PHSzsVx4djAIl5bsXEtcgByK3D24lbpJmCelyVCy6I', 1, '2015-11-18 20:15:37', '2015-11-30 23:01:56'),
 (3, 'candidate1', 'candidate1@gmail.com', '$2y$10$6ngyh8u5bnvwCIA24lWpXezylhRCX/KRFSBvfnYyA0Z3QfsQE/Sxi', '413e9fcc5b155222c0ae8f4fa04a2d10', NULL, 1, '2015-11-21 06:21:21', '2015-11-21 06:21:21'),
-(4, 'integrasolid', 'integrasolid@gmail.com', '$2y$10$/j/UV3uzo0lZVos9EHuEWOQWZAYUoVmd9z1ZNGu4t6jpxbXqCzfyC', '262ab4ef538627e576c5fae04501b7e8', 'b3e8fVhw7Cv0qKi4gQtUebZ5HOuatOHRyrBRGMFbzZUuJabZojh3PLcWCmd4', 1, '2015-11-26 00:43:52', '2015-11-28 19:16:54'),
+(4, 'integrasolid', 'integrasolid@gmail.com', '$2y$10$/j/UV3uzo0lZVos9EHuEWOQWZAYUoVmd9z1ZNGu4t6jpxbXqCzfyC', '262ab4ef538627e576c5fae04501b7e8', 'okRNEzYgwbUPiiN9hnhr12RStWPxvsewpcfreU94QaPy1KnuYpHtBLD8oEZJ', 1, '2015-11-26 00:43:52', '2015-11-30 23:18:03'),
 (8, 'toriko', 'toriko@gmail.com', '$2y$10$g3vVxRljgKptxBERrh3PZebW6SdU6pTIu1LEMIFw7p/LMCmwFwGXK', 'e11ed62a125fec8f217dc16239ec05f7', NULL, 1, '2015-11-29 23:45:11', '2015-11-29 23:45:11');
 
 --
