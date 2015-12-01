@@ -55,8 +55,11 @@
 
 		</div>
 		<div class="col-md-4">
-			<div class="right_sidebar">
+			<div class="right_sidebar" style="background:#F4F4F4;min-height:500px;padding:40px;">
 				<h3>Exam Info</h3>
+				<p>
+					Hi, <strong>{{ $the_user->full_name }}</strong>
+				</p>
 				<p>
 					Answered Question: 13 / 70
 				</p>

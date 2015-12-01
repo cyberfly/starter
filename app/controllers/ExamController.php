@@ -9,6 +9,7 @@ class ExamController extends \BaseController {
 	 */
 	public function index()
 	{
+		// dd($this->the_user);
 		// get value from url to search
 
 		$question_section = Input::get('question_section');
