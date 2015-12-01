@@ -76,6 +76,20 @@ class BaseController extends Controller {
     }
     else {
 
+      // give default value
+
+      $this->the_user->id = 0;
+      $this->the_user->username = '';
+      $this->the_user->email = '';
+      $this->the_user->full_name = '';
+      $this->the_user->ic = '';
+      $this->the_user->phone = '';
+      $this->the_user->approved_site_id = '';
+
+      // share variable to view
+
+      View::share ( 'the_user', $this->the_user );
+
     }
 
     return $this->the_user;
